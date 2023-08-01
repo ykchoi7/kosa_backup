@@ -1,11 +1,15 @@
 import java.util.Scanner;
 
-import com.my.product.dao.ProductDAO;
+import com.my.product.dao.ProductDAOInterface;
+import com.my.product.dao.ProductDAOList;
 import com.my.product.dto.Product;
 
 public class ProductUser {
 	Scanner sc = new Scanner(System.in); //sc=nonstatic 변수 (객체가 생성될 때 메모리에 할당)
-	ProductDAO dao = new ProductDAO();	 //dao는 한번 선언하고 각 메서드가 같이 공유해야한다
+//	ProductDAOArray dao = new ProductDAOArray();  //dao는 한번 선언하고 각 메서드가 같이 공유해야한다
+//	ProductDAOInterface dao = new ProductDAOArray();
+	ProductDAOInterface dao = new ProductDAOList(); //저장소를 다르게 사용 가능
+	
 	
 	public void findAll() {
 		System.out.println(">>상품 전체목록<<");

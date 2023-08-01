@@ -1,15 +1,12 @@
 package com.my.product.dao;
 import com.my.product.dto.Product;
 
-public class ProductDAO {
+public class ProductDAOArray implements ProductDAOInterface{
 
 	private Product[] products = new Product[5]; //상품저장소
 	private int totalCnt; //저장된 상품수, 처음 0으로 초기화
 	
-	/**
-	 * 상품을 저장소에 저장한다. 저장소가 꽉 찬 경우 "저장소가 꽉찼습니다" 메시지 출력되고 저장이 안된다
-	 * @param product 상품
-	 */
+	//사용설명서를 인터페이스에 적어두어도 여기에서도 마우스 올려놓았을 때 설명이 보인다
 	public void insert(Product product) {
 		
 		if (totalCnt == products.length) {
@@ -31,11 +28,7 @@ public class ProductDAO {
 		
 	}
 	
-	/**
-	 * 상품번호에 해당하는 상품을 저장소에서 검색하여 반환한다
-	 * @param prodNo 상품번호
-	 * @return 상품객체. 번호에 해당 상품을 찾지 못하면 null을 반환한다
-	 */
+	
 	public Product selectByProdNo(String prodNo) {
 		for (int i = 0; i < totalCnt; i++) {
 			Product savedP = products[i]; //이미 저장된 상품
@@ -46,10 +39,7 @@ public class ProductDAO {
 		return null;
 	}
 
-	/**
-	 * 저장소에 저장된 상품들만 반환한다
-	 * @return 상품들. 저장소에 저장된 상품이 한 개도 없으면 null을 반환한다
-	 */
+	
 	public Product[] selectAll() {  //여러개가 조회되어야하기 때문에 배열타입으로 생성
 		
 		Product[] all = new Product[totalCnt];
