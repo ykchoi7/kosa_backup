@@ -1,5 +1,6 @@
 package com.my.product.dao;
 
+import com.my.exception.AddException;
 import com.my.product.dto.Product; //ctrl+shift+o -> import
 
 public interface ProductDAOInterface {
@@ -9,7 +10,7 @@ public interface ProductDAOInterface {
 	 * 상품을 저장소에 저장한다. 저장소가 꽉 찬 경우 "저장소가 꽉찼습니다" 메시지 출력되고 저장이 안된다
 	 * @param product 상품
 	 */
-	void insert(Product product); //public abstract void insert(Product product);와 같음
+	void insert(Product product) throws AddException; //public abstract void insert(Product product);와 같음
 	
 	/**
 	 * 상품번호에 해당하는 상품을 저장소에서 검색하여 반환한다

@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import com.my.exception.AddException;
+import com.my.product.dao.ProductDAOArray;
 import com.my.product.dao.ProductDAOInterface;
 import com.my.product.dao.ProductDAOList;
 import com.my.product.dto.Product;
@@ -7,8 +9,8 @@ import com.my.product.dto.Product;
 public class ProductUser {
 	Scanner sc = new Scanner(System.in); //sc=nonstatic 변수 (객체가 생성될 때 메모리에 할당)
 //	ProductDAOArray dao = new ProductDAOArray();  //dao는 한번 선언하고 각 메서드가 같이 공유해야한다
-//	ProductDAOInterface dao = new ProductDAOArray();
-	ProductDAOInterface dao = new ProductDAOList(); //저장소를 다르게 사용 가능
+	ProductDAOInterface dao = new ProductDAOArray();
+//	ProductDAOInterface dao = new ProductDAOList(); //저장소를 다르게 사용 가능
 	
 	
 	public void findAll() {
@@ -61,11 +63,18 @@ public class ProductUser {
 		//p1.prodPrice와 prodPrice의 데이터 타입이 다를 때,
 			//String->int : int = Integer.parseInt(String);
 			//String->float : float = Float.parseFloat(String);
-		dao.insert(p1);
+		
+		//exception 처리방식 1)throw declaration 2)직접 try~catch
+		try {
+			dao.insert(p1);
+		} catch (AddException e) {
+//			e.printStackTrace(); --이 부분이 있었기 때문에 오류메세지가 빨간색까지 다 뜨는 것
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws AddException {
 		ProductUser user = new ProductUser();
 		
 		//반복의 횟수 혹은 반복 최대 값이 결정되어있을 때 -> for 반복문
