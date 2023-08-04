@@ -1,5 +1,7 @@
 package com.my.product.dto;
 
+import java.util.Objects;
+
 public class Product {
 	
 	private String prodNo;	//이 변수를 private로 선언하여 dao나 user에서 사용이 불가하므로 오류 발생
@@ -23,10 +25,8 @@ public class Product {
 		this.prodName = prodName;
 		this.prodPrice = prodPrice;
 	}
-	
 	//생성자가 아무것도 없어야 default 생성자 생성 (위에 3개 모두 없어야함)
 	//생성자 Product() -> 오버로드 : 같은 이름 but 매개변수가 다른 타입이나 다른 갯수
-	
 	
 	public void setProdNo(String prodNo) {
 		//제약조건을 걸 때 setProdNo 내에서 설정해줌
@@ -58,5 +58,59 @@ public class Product {
 	public int getProdPrice() {
 		return prodPrice;
 	}
+	
+	
+//	if (p.getProdNo().equals(product.getProdNo()))
+//	-> if (p.equals(product)) 로 만들기 위한 코드 작성해보기
+
+	//내가 짠 코드
+//	public Object Product() {
+//		return this.prodNo;
+//	}
+//
+//	public void equals(String product) {
+//		product = this.prodNo;
+//	}
+	
+	public boolean equals(Product p) {
+		return this.prodNo.equals(p.prodNo);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(prodNo);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (this.getClass() != obj.getClass())
+			return false;
+		//위 두줄을 풀어써보면
+//		Class currentClass = this.getClass();
+//		Class paramClass = obj.getClass();
+//		if (currentClass != obj.getClass()) {
+//			return false;
+//		}
+		Product other = (Product) obj;
+		return Objects.equals(prodNo, other.prodNo);
+	}
+	
+//	@Override
+//	public boolean equals(Object obj) {
+//		if(obj == null) {
+//			return false;
+//		}
+//		if(obj instanceof Product) {
+//			Product product = (Product)obj;
+//			if(this.prodNo.equals(product.prodNo)) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 	
 }

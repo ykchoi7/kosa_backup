@@ -1,5 +1,10 @@
 package com.my.product.dao;
+import java.util.Scanner;
+
 import com.my.exception.AddException;
+import com.my.exception.FindException;
+import com.my.exception.ModifyException;
+import com.my.exception.RemoveException;
 import com.my.product.dto.Product;
 
 public class ProductDAOArray implements ProductDAOInterface{
@@ -39,24 +44,26 @@ public class ProductDAOArray implements ProductDAOInterface{
 	}
 	
 	
-	public Product selectByProdNo(String prodNo) {
+	public Product selectByProdNo(String prodNo) throws FindException {
 		for (int i = 0; i < totalCnt; i++) {
 			Product savedP = products[i]; //이미 저장된 상품
 			if (savedP.getProdNo().equals(prodNo)){ //String의 같음은 꼭 .equals 로 표현하기***
 				return savedP;
 			}
 		}
-		return null;
+//		return null; //null을 반환한다 
+		throw new FindException("상품이 없습니다");
 	}
 
 	
-	public Product[] selectAll() {  //여러개가 조회되어야하기 때문에 배열타입으로 생성
+	public Object selectAll() throws FindException {  //여러개가 조회되어야하기 때문에 배열타입으로 생성
 		
 		Product[] all = new Product[totalCnt];
 		
 		//저장소에 저장된 상품 0개 일 때
 		if (totalCnt == 0) {
-			return null;
+//			return null;
+			throw new FindException("상품이 한개도 없습니다");
 		}
 //		if (products == null) { //products는 명시 초기화를 했기 때문에 null이 아님 -> 그래서 이렇게 설정하면 안됨
 //			return null;
@@ -68,5 +75,42 @@ public class ProductDAOArray implements ProductDAOInterface{
 		}
 		return all;
 		
+	}
+
+	//수정
+	public void update(Product p) throws ModifyException {
+		if (totalCnt == 0) {
+			throw new ModifyException("수정할 상품이 없습니다");
+		}
+		
+		int index = 0;		
+		for (int i = 0; i < totalCnt; i++) {
+			if (products[i].getProdNo().equals(p.getProdNo())) {
+				index = i;
+				if (p.getProdName() != null) { //받아오는 상품명이 null이 아니면
+					products[index].setProdName(p.getProdName());
+				}
+				if (p.getProdPrice() != 0) { //받아오는 가격이 0이 아니면
+					products[index].setProdPrice(p.getProdPrice());
+				}
+				return; //update 메서드 종료
+			}
+		}
+	}
+
+	//삭제
+	public void delete(String prodNo) throws RemoveException {
+		if (totalCnt == 0) {
+			throw new RemoveException("삭제할 상품이 없습니다");
+		}
+		
+		for (int i = 0; i < totalCnt; i++) {
+			if (products[i].getProdNo().equals(prodNo)) {
+				for (int j=i; j < totalCnt-1; j++) { //j+1을 계산하기 때문에 totalCnt-1로 설정해야
+					products[j] = products[j+1];
+				}
+				totalCnt--;
+			}
+		}
 	}
 }

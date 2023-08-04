@@ -25,7 +25,7 @@ public class ExceptionTest {
 			num = sc.nextInt(); //num이 try블럭 안에 있으면 그 안에서만 사용 가능하다 
 			m(num);
 			//try블럭에서 if(num==0)이라는 조건으로 예외를 미리 막는 것도 GOOD CODE!
-		} catch (InputMismatchException e) {			
+		} catch (InputMismatchException e) {
 			//예외가 발생하면 한번더 알려주기
 			System.out.println("숫자값을 입력하지 않았습니다. 1로 자동설정합니다.");
 //			m(1);
