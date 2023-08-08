@@ -1,8 +1,9 @@
 package com.my.product.dto;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Product {
+public class Product implements Serializable {
 	
 	private String prodNo;	//이 변수를 private로 선언하여 dao나 user에서 사용이 불가하므로 오류 발생
 	private String prodName;

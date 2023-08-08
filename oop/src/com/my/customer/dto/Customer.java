@@ -1,8 +1,10 @@
 package com.my.customer.dto;
 
+import java.io.Serializable;
+
 public class Customer extends Person {
 	private String id;
-	private String pwd;
+	transient private String pwd; //직렬화에서 제외됨, 자동 null
 	
 	//매개변수없는 생성자
 	public Customer() {

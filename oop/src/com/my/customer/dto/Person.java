@@ -1,6 +1,8 @@
 package com.my.customer.dto;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable{
 	
 	protected String name;
 	protected String address;
