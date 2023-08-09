@@ -64,7 +64,7 @@ public class ProductUser {
 		dao.selectByProdNo(prodNo);
 		
 		//바꿀 상품이름과 가격 입력받기
-		System.out.println("바꿀 상품 이름을 입력해주세요. 변경하지 않으려면 바로 엔터를 누르세요");
+		System.out.println("바꿀 상품 이름을 입력해주세요. 변경하지 않으려면 엔터를 누르세요");
 		String pName = sc.nextLine();
 		if (pName.equals("")) {
 			pName = null;

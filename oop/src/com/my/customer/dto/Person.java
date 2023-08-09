@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class Person implements Serializable{
 	
+	/**
+	 * 동일한 serialVersionUID 상수값을 가지면 클래스 내용이 달라도 역직렬화가 가능하다
+	 */
+	private static final long serialVersionUID = 1L;
 	protected String name;
 	protected String address;
 	
