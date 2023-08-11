@@ -34,11 +34,11 @@ public class InheritanceMethod {
 		ChildMethod cm = new ChildMethod();
 		cm.m(); //부모와 자식 메서드명이 동일할 때 자식 메서드로 덮어씌워짐
 		
-		ParentMethod1 pm = new ChildMethod();
+		ParentMethod1 pm = new ChildMethod(); //upcasting
 		pm.m(); //pm의 타입이 ChildMethod로 새로 생성이 되었기 때문에 최종적으로 ChildMethod의 메소드로 덮어씌워짐
 		
-		ChildMethod cm1 = (ChildMethod) new ParentMethod1();
-		cm1.m();
+//		ChildMethod cm1 = (ChildMethod) new ParentMethod1(); //downcasting
+//		cm1.m();
 		
 		//자식의 객체에서 부모로부터 받은 모든 메서드를 불러올 수 있다
 		cm.cm();

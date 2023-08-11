@@ -4,7 +4,8 @@ public class WrapperTest {
 	public static void main(String[] args) {
 		int i=100;
 		Object obj;
-		//Boxing : {기본형(int)->참조형(Integer)}->Object로 업캐스팅		
+		//Boxing : 기본자료형을 참조자료형으로 만드는 것
+		//{기본형(int)->참조형(Integer)}->Object로 업캐스팅		
 		obj = Integer.valueOf(i); 
 		
 		obj = i; //AutoBoxing됨

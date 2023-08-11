@@ -33,7 +33,7 @@ class ClientThread extends Thread {
 				receiveMsg = dis.readUTF();
 				System.out.println("서버에서 되돌려준 메시지: " + receiveMsg);
 			}
-			//내부에서 try~catch를 하지 않은 이유 - 메시지를 받지 못해도 다른 메시지는 계속 출력을 해야하기 때문
+			//내부에서 try~catch를 하지 않은 이유 - 내부에서 하면 예외 발생할 때 catch를 하더라도 반복은 계속 진행됨 / 예외 발생했을 때 반복문을 빠져나와서 예외처리해야 반복문이 종료됨
 		} catch (SocketException e) {
 			
 		} catch (EOFException e) { //강제종료시 발생하는 예외
