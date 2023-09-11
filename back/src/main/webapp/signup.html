@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>회원가입</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            form {
+                width: 400px;
+                height: 100%;
+                border: 1px black solid;
+                padding: 10px;
+                margin: 10px;
+                vertical-align: middle;
+            }
+
+            #id, #pwd, #pwd1, #name {
+                display: inline-block;
+                position: absolute;
+                left: 100px;
+            }
+
+            #btn {
+                display: inline-block;
+                position: absolute;
+                left: 300px;
+            }
+
+            #signup {
+                /* visibility: hidden; */
+                display: none;
+            }
+        </style>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script>
+            //중복확인되었을 때, 입력한 아이디값이 'admin'인 경우 '이미 사용중인 아이디입니다' 경고창
+            //입력된 아이디값이 'admin'이 아닌 경우에는 '사용가능한 아이디입니다' 경고창 + 가입하기 버튼 보여주기
+            
+            // ---------------------------jQuery 활용 버전--------------------------
+            // window.addEventListener('load', () => { //function()
+            $(() => {
+                //DOM트리에서 중복확인버튼 & id입력란 객체 찾기 & 가입하기버튼 객체 찾기
+                // const checkObj = document.querySelector("form>input[type=button]")
+                // const idObj = document.getElementById('id')
+                // const btSignupObj = document.querySelector("form>input[type=submit]")
+
+                const checkObj = $("form>input[type=button]")
+                const idObj = $('#id')
+                const btSignupObj = $("form>input[type=submit]")
+                
+                //---- id입력란객체에서 focus이벤트가 발생했을 때 할 일 START ----
+                // idObj.addEventListener('focus', () => { //function()
+                //     btSignupObj.style.display = 'none'
+                // })
+
+                idObj.focus(() => {
+                    btSignupObj.attr("style", "display:none")
+                })
+                //---- id입력란객체에서 focus이벤트가 발생했을 때 할 일 END ----
+
+                //---- type button에서 click 이벤트가 발생했을 때 할 일 START ----
+                // checkObj.addEventListener('click', function(){
+                //     if (idObj.value == 'admin') {
+                //         alert('이미 사용중인 아이디입니다')
+                //     } else {
+                //         alert('사용 가능한 아이디입니다')
+                //         btSignupObj.style.display = 'inline-block'
+                //     }
+                // })
+
+                checkObj.click(() => {
+                    if (idObj.val() == 'admin') {
+                        alert('이미 사용중인 아이디입니다')
+                    } else {
+                        alert('사용 가능한 아이디입니다')
+                        btSignupObj.attr("style", "display:inline-block")
+                    }
+                })
+                //---- type button에서 click 이벤트가 발생했을 때 할 일 END ----
+            
+                //가입하기 클릭되었을 때 비밀번호값과 비밀번호1값이 같을 경우 전송
+                //다를 경우 '비밀번호를 다시 입력하세요' 경고창 보여주기
+                const formObj = $("form") //document.querySelector("form")
+                // const signupObj = document.querySelector("form>input[type=submit]")
+                // const passwordArr = document.querySelectorAll("form>label>input[type=password]")
+                const passwordArr = $('form').find('label').find('input[type=password]')
+
+                //---- type submit에서 click 이벤트 발생했을 때 할 일 START ----
+                // formObj.addEventListener('submit', (e) => { //function(e)
+                formObj.submit((e) => {
+                    // console.log(passwordArr[0])
+                    // console.log(passwordArr[1])
+                    // if (passwordArr[0].value != passwordArr[1].value) {
+                    //     alert("비밀번호를 다시 입력하세요")
+                    //     passwordArr[0].focus() //비밀번호칸으로 자동 focus
+                    //     e.preventDefault();
+                    // }
+
+                    console.log(passwordArr.eq(0))
+                    console.log(passwordArr.eq(1))
+                    if (passwordArr.eq(0).val() != passwordArr.eq(1).val()) {
+                        alert("비밀번호를 다시 입력하세요")
+                        passwordArr.eq(0).focus() //비밀번호칸으로 자동 focus
+                        e.preventDefault();
+                    }
+                })
+                //---- type submit에서 click 이벤트 발생했을 때 할 일 END ----
+            })
+        </script>
+    </head>
+    <body>
+        <form method="post" action="http://localhost:8888/back/signup">
+            <label>아이디: <input type="text" required id="id" name="id"></label>
+            <input type="button" id="btn" value="중복확인"><br>
+            <label>비밀번호: <input type="password" required id="pwd" name="pwd"></label><br>
+            <label>비밀번호 1: <input type="password" required id="pwd1"></label><br>
+            <label>이름: <input type="text" required id="name" name="name"></label><br><br>
+
+            <input type="submit" id="signup" value="가입하기"><br>
+        </form>
+    </body>
+</html>
