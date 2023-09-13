@@ -36,10 +36,15 @@
     <script>
     $(() => {
     	$('.pagegroup > span').click((e) => {
-    		alert($(e.target).html() + "페이지가 클릭되었습니다")
+    		// alert($(e.target).html() + "페이지가 클릭되었습니다")
+    		
+    		const pg = $(e.target).attr('class') //pg1, pg2, ... (.attr()-선택된 요소에 대한 값을 반환)
+			const currentPage = pg.substr(2)     //1, 2, ...
+			const url = './productlist?currentPage='+currentPage
+			const $section = $('section')
+			$section.load(url)
     	})
     })
-    
     </script>
 <meta charset="UTF-8">
 <title>productlistresult.jsp</title>
@@ -71,7 +76,7 @@ if (startPage == 0) {
 }
 if (startPage > 1) {
 %>
-[<span>PREV</span>]&nbsp;&nbsp;&nbsp; 
+[<span class="pg<%=startPage-1%>">PREV</span>]&nbsp;&nbsp;&nbsp; 
 <%
 }
 

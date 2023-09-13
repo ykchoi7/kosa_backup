@@ -42,6 +42,10 @@ public class ProductService {
 		
 	}
 	
+	public Product findByProdNo(String prodNo) throws FindException {
+		return repository.selectByProdNo(prodNo);
+	}
+	
 	public static void main(String[] args) {
 		ProductService ps = new ProductService();
 		try {

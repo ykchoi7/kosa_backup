@@ -21,4 +21,12 @@ public interface ProductRepository {
 	 * @throws FindException DB와의 연결 실패시 예외 발생한다
 	 */
 	int selectCount() throws FindException;
+	
+	/**
+	 * 상품번호에 해당하는 상품객체를 검색한다
+	 * @param prodNo 상품번호
+	 * @return 상품객체
+	 * @throws FindException 상품이 없거나 DB와의 연결 실패하면 예외발생한다
+	 */
+	Product selectByProdNo(String prodNo) throws FindException;
 }

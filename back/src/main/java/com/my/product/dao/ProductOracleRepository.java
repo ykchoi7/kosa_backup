@@ -58,6 +58,42 @@ public class ProductOracleRepository implements ProductRepository {
 	}
 	
 	@Override
+	public Product selectByProdNo(String prodNo) throws FindException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = MyConnection.getConnection();
+		} catch (Exception e) {
+			throw new FindException(e.getMessage());
+//			e.printStackTrace();
+		}
+		
+		String selectByProdNoSQL = "SELECT *\r\n"
+						+ "		 FROM product\r\n"
+						+ "		 WHERE prod_no=?";
+		
+		try {
+			pstmt = conn.prepareStatement(selectByProdNoSQL);
+			pstmt.setString(1, prodNo);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return new Product(rs.getString("prod_no"), 
+						rs.getString("prod_name"), 
+						rs.getInt("prod_price"));
+			} else {
+				throw new FindException("상품이 없습니다");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new FindException(e.getMessage());
+		} finally {
+			MyConnection.close(conn, pstmt, rs);
+		}
+	}
+	
+	@Override
 	public int selectCount() throws FindException {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -101,10 +137,17 @@ public class ProductOracleRepository implements ProductRepository {
 //		}
 		
 		//전체 상품 수 불러오기 test
+//		try {
+//			System.out.println(repository.selectCount());
+//		} catch (FindException e) {
+//			e.printStackTrace();
+//		}
+		
+		//prodno로 상세정보 불러오기 test
 		try {
-			System.out.println(repository.selectCount());
+			System.out.println(repository.selectByProdNo("C0001"));
 		} catch (FindException e) {
-			e.printStackTrace();
+			e.printStackTrace(); //상품번호가 없으면 '상품이 없습니다' 출력
 		}
 	}
 
