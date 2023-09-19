@@ -29,7 +29,8 @@ public class ProductListJsonServlet extends HttpServlet {
 		//응답 형식 (json형태)
 		response.setContentType("application/json; charset=utf-8"); // text/html 대신 사용
 		//응답 헤더
-		response.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+		response.setHeader("Access-Control-Allow-Origin", "http://192.168.1.13:5500"); //127.0.0.1:5500
+		response.setHeader("Access-Control-Allow-Credentials", "true");
 		
 		//응답 출력 스트림 얻기
 		PrintWriter out = response.getWriter();

@@ -42,9 +42,10 @@ public class CartListServlet extends HttpServlet {
 		try {
 			for (String key : map.keySet()) {
 				Product p = service.findByProdNo(key);
-				map.put("product", p);
-				map.put("quantity", map.get(key));
-				cartlist.add(map);
+				Map<String, Object> carts = new HashMap<>();
+				carts.put("product", p);
+				carts.put("quantity", map.get(key));
+				cartlist.add(carts);
 			}
 		} catch (FindException e) {
 			e.printStackTrace();
