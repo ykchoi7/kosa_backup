@@ -15,6 +15,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.my.customer.dto.Customer;
+import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.sql.MyConnection;
 
@@ -54,6 +55,25 @@ public class CustomerOracleMybatisRepository implements CustomerRepository {
 				session.close();
 			}
 		}
+	}
+
+	@Override
+	public void insert(Customer c) throws AddException {
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			session.insert("com.my.customer.CustomerMapper.insert", c);
+			session.commit();
+		} catch(Exception e) {
+			e.printStackTrace();
+			session.rollback();
+			throw new AddException(e.getMessage());
+		} finally {
+			if (session != null) {
+				session.close(); //MyBatis에서는 자동 닫히지 않는다
+			}
+		}
+		
 	}
 
 }

@@ -9,6 +9,8 @@
   <typeAliases>
   	<typeAlias type="com.my.customer.dto.Customer" alias="Customer"/>
   	<typeAlias type="com.my.product.dto.Product" alias="Product"/>
+  	<typeAlias type="com.my.order.dto.OrderInfo" alias="OrderInfo"/>
+  	<typeAlias type="com.my.order.dto.OrderLine" alias="OrderLine"/>	
   </typeAliases>
   <environments default="development">
     <environment id="development">
@@ -24,5 +26,6 @@
   <mappers>
     <mapper resource="com/my/sql/Customer.xml"/>
     <mapper resource="com/my/sql/Product.xml"/>
+    <mapper resource="com/my/sql/Order.xml"/>
   </mappers> 
 </configuration>

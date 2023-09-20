@@ -53,7 +53,7 @@ public class OrderOracleRepository implements OrderRepository {
 					OrderInfo info = new OrderInfo();
 					info.setOrderNo(orderNo);
 					info.setOrderId(orderId);
-					info.setOrderDate(rs.getDate("order_dt"));
+					info.setOrderDt(rs.getDate("order_dt"));
 					
 					//lines에는 아직 값이 안 들어간 상태. 그 상태로 일단 껍데기만 info에 넣어둠
 					lines = new ArrayList<>();
