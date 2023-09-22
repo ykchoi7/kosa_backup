@@ -1,5 +1,7 @@
 package com.my.customer.dto;
 
+import java.io.File;
+
 public class Customer extends Person{
 	/**
 	 * 
@@ -31,6 +33,7 @@ public class Customer extends Person{
 		this(id, pwd);
 		this.name = name;
 	}
+
 
 	//setter/getter
 	public String getId() {
