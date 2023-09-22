@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            div.product {
+                box-sizing: border-box; /*padding, margin값 계산하기 편리하므로 이렇게 설정하는 것을 권장*/
+                width:200px;
+                display: inline-block;
+            }
+
+            div.product > ul {
+                list-style-type: none;
+                /* padding-left: 0px; */
+            }
+
+            /* 확장을 고려하여 정확하게 어떤 태그 밑의 img인지 작성하기 */
+            div.product > ul > li > img {
+                /* width:300px;
+                height:300px; */
+                /* width:50%; */
+                width:80%;
+            }
+
+            div.product > ul > li > span {
+                display: block;
+                text-align: center;
+                font-size: 16px;
+                width:80%;
+            }
+
+            .productlist > h3 {
+                width:200px;
+                background: lightseagreen;
+                margin: 10px auto;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="productlist">
+            <h3>상품목록</h3>
+            <div class="product">
+                <ul>
+                    <li><img src="../images/C0001.jpg" alt="아메리카노"></li>
+                    <li><span>아메리카노</span></li>
+                </ul>
+            </div>
+            <div class="product">
+                <ul>
+                    <li><img src="../images/C0005.jpg" alt="카푸치노"></li>
+                    <li><span>카푸치노</span></li>
+                </ul>
+            </div>
+            <div class="product">
+                <ul>
+                    <li><img src="../images/C0002.jpg" alt="카페라떼"></li>
+                    <li><span>카페라떼</span></li>
+                </ul>
+            </div>
+            <div class="product">
+                <ul>
+                    <li><img src="../images/F0001.jpg" alt="샌드위치"></li>
+                    <li><span>샌드위치</span></li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

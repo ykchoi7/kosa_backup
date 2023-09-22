@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>로그인</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            form {
+                width: 300px;
+                height: 100%;
+                border: 1px black solid;
+                padding: 10px;
+                margin: 10px;
+            }
+        </style>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script>
+            // ---------------------------jQuery 활용 버전-----------------------
+            // window.addEventListener('load', ()=> {
+            $(() => {
+                // alert("login용 window load eventhandler")
+                const savedId = localStorage.getItem('savedId')
+                // console.log(savedId) //null
+                if (savedId != null) {
+                    document.querySelector('input[name=id]').value = savedId
+                }
+
+                console.log(savedId)
+
+                //DOM트리에서 form객체 찾기
+                //----form객체에서 submit이벤트가 발생했을 때 할 일 START----
+                // document.querySelector('form').addEventListener('submit', (e) => {
+                $('form').submit((e) => {
+                    // //checkbox객체의 checked 속성값 확인
+                    // if (document.querySelector('input[type=checkbox]').checked) { //.checked==true 와 동일 (체크되어있으면)
+                    //     localStorage.setItem('savedId', document.querySelector('input[name=id]').value) //id의 값인 savedId를 localStorage에 저장
+                    // } else {
+                    //     localStorage.removeItem('savedId') //아니면 localStorage에서 지움
+                    // }
+
+                    //checkbox객체의 checked 속성값 확인 jQuery용 메서드: .prop('checked')
+                    if ($('input[type=checkbox]').prop('checked')) {
+                        localStorage.setItem('savedId', $('input[name=id]').val())
+                    } else {
+                        localStorage.removeItem('savedId')
+                    }
+
+                    // const xhttp = new XMLHttpRequest();
+                    // xhttp.addEventListener('readystatechange', function() {
+                    //     if (this.readyState == 4) {
+                    //         if (this.status == 200) {
+                    //             alert(this.responseText)
+                    //         } else {
+                    //             alert(this.status + " : " + this.responseText)
+                    //         }
+                    //     }
+                    // })
+                    // xhttp.open('POST', "http://localhost:8888/back/login")
+                    // //ajax로 요청할 때는 form 태그 내에 method, action 다 필요없음
+                    // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+                    // // xhttp.send("id=aaa&pwd=bbb")
+
+                    //'로그인성공'을 화면 내에 보여주고 싶으면 설정
+                    const $formObj = $('form')
+
+                    const $id = $('input[name=id]').val()
+                    const $pwd = $('input[name=pwd]').val()
+                    const data = `id=${$id}&pwd=${$pwd}`
+                    console.log(data)
+
+                    $.ajax ({
+                        url: "http://localhost:8888/back/login",
+                        method: 'POST',
+                        success: (responseText) => { //요청, 응답이 성공은 했지만 로그인 실패하는 경우도 success
+                            // $formObj.html(responseText)
+                            alert(responseText)
+                        }, 
+                        error: (jqXHR, textStatus) => { //요청, 응답이 제대로 되지 않아서 오류 발생하는 경우
+                            // alert('응답실패')
+                            alert(jqXHR.readyState + " : " + jqXHR.status)
+                        } 
+                    })
+
+                    // const idValue = document.querySelector('input[name=id]').value
+                    // const pwdValue = document.querySelector('input[name=pwd]').value
+                    // const data = `id=${idValue}&pwd=${pwdValue}`
+                    // console.log(data)
+                    // xhttp.send(data)
+                    
+                    e.preventDefault()
+                })
+                //----form객체에서 submit이벤트가 발생했을 때 할 일 END----
+
+            })
+        </script>
+    </head>
+    <body>
+        <form> <!--method="post" action="http://localhost:8888/back/login"-->
+            <label>아이디: <input type="text" id="id" name="id"></label><br>
+            <label>비밀번호: <input type="password" id="pwd" name="pwd"></label><br><br>
+            <input type="checkbox" checked>아이디 저장</label>
+            <input type="submit" value="로그인"> <br>
+        </form>
+    </body>
+</html>
