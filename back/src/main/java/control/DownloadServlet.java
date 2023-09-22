@@ -26,8 +26,9 @@ public class DownloadServlet extends HttpServlet {
 		//위에걸 사용 안하는 이유? PrintWriter는 문자단위의 출력 스트림인데, 여기서는 바이너리 형태로 파일 내용을 출력해야한다
 		ServletOutputStream sos = response.getOutputStream(); //바이트 단위 출력 스트림
 		String id = request.getParameter("id");
+		String opt = request.getParameter("opt"); //profile인지 intro인지 종류 구분
 		String attachesDir = "D:\\KOSA202307\\attaches";
-		String fileName = id + "_profile_";
+		String fileName = id + "_" + opt + "_";
 		File dir = new File(attachesDir);
 		for (File file: dir.listFiles()) {
 			String existFileName = file.getName();

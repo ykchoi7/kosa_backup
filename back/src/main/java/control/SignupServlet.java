@@ -63,6 +63,7 @@ public class SignupServlet extends HttpServlet {
 			try {
 				String originProfileFileName = attach.getFile("f1").get(0).getName();
 				attach.upload("f1", id + "_profile_" + originProfileFileName);
+				//여기서 썸네일용 라이브러리(Thumbnailator) 사용해서 profile의 100px 버전을 저장 -> 용량 과부하 방지 가능
 			} catch (Exception e) {
 			}
 			

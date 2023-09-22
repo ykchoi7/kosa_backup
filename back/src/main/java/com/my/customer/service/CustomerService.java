@@ -16,6 +16,7 @@ public class CustomerService {
 	
 	/**
 	 * 아이디와 비밀번호에 일치하는 고객정보가 존재한다면 반환값이 없고
+	 *							   존재하지 않으면 FindException 발생한다
 	 * @param id
 	 * @param pwd
 	 * @throws FindException
