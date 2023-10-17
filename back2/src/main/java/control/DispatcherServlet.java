@@ -63,13 +63,13 @@ public class DispatcherServlet extends HttpServlet {
 //			Method m = clazz.getMethod("getInstance");
 //			Controller controller = (Controller)clazz.getDeclaredConstructor().newInstance(); //객체 생성해서 Controller타입으로 다운캐스팅
 //			controller.execute(request, response); //호출한 controller의 execute() 메소드를 호출
-		
-			Class<?> clazz = Class.forName(className);//클래스이름에 해당하는 .class파일 찾아서 JVM으로 로드
+			
+			Class<?> clazz = Class.forName(className); //클래스이름에 해당하는 .class파일 찾아서 JVM으로 로드
 			Controller controller;
 			try {
 				Method method = clazz.getMethod("getInstance");
-				controller = (Controller)method.invoke(null);//static인 getInstance()메서드호출
-			}catch(NoSuchMethodException e) {			
+				controller = (Controller)method.invoke(null); //static인 getInstance()메서드호출, 일반 controller로 다운캐스팅
+			}catch(NoSuchMethodException e) {
 				controller = (Controller)clazz.getDeclaredConstructor().newInstance();
 			}
 			String path = controller.execute(request, response);
