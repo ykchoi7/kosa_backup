@@ -19,7 +19,37 @@
 		<property name="a" ref="a"></property>
 	</bean>
 	
-	<bean id="productDAO" class="com.my.product.dao.ProductOracleRepository">
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="oracle.jdbc.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="username" value="hr"></property>
+		<property name="password" value="hr"></property>
+	</bean>
+	
+	<!-- connection pool을 설정하는 방법 -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<!-- <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property> -->
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+ 		<!-- <property name="jdbcUrl"  value="jdbc:oracle:thin:@localhost:1521:xe"></property> -->
+		<property name="jdbcUrl"  value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="username" value="hr"/>
+		<property name="password" value="hr"/>
+		<property name="minimumIdle"  value="3" />
+	</bean>
+	
+	<bean id="dataSourceHikari" class="com.zaxxer.hikari.HikariDataSource">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceHikari"></property>
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+	</bean>
+	
+	<bean id="productDAO" class="com.my.product.dao.ProductOracleMybatisRepository">
+		<!-- <property name="ds" ref="dataSource"/> -->
+		<!-- <property name="ds" ref="dataSourceHikari"></property> -->
+		<property name="SqlSessionFactory" ref="sqlSessionFactory"></property>
 	</bean>
 	
 	<bean id="productService" class="com.my.product.service.ProductService">

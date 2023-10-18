@@ -5,6 +5,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.my.di.dto.A;
 import com.my.di.dto.B;
+import com.my.exception.FindException;
+import com.my.product.dao.ProductRepository;
+import com.my.product.service.ProductService;
 
 //spring container를 구동시켜줄 클래스
 public class ContainerStart {
@@ -31,6 +34,16 @@ public class ContainerStart {
 		B b1 = ctx.getBean("b", com.my.di.dto.B.class);
 		System.out.println("b의 no:" + b1.getNo()); //999 
 		//=> 값을 바꾸고 싶으면 xml 파일만 수정하면 된다! 결합도 떨어트리는 작업 (의존성 주입)
+		
+		ProductRepository r1 = ctx.getBean("productDAO", com.my.product.dao.ProductRepository.class);
+		System.out.println(r1);
+		
+		ProductService s1 = ctx.getBean("productService", com.my.product.service.ProductService.class);
+		try {
+			System.out.println(s1.findAll(1));
+		} catch (FindException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

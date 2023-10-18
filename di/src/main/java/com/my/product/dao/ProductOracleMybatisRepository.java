@@ -19,21 +19,16 @@ import com.my.exception.FindException;
 import com.my.product.dto.Product;
 import com.my.sql.MyConnection;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class ProductOracleMybatisRepository implements ProductRepository {
 	
 	private SqlSessionFactory sqlSessionFactory;
-
-	//DB를 mybatis로 연동
-	public ProductOracleMybatisRepository() {
-		String resource = "com/my/sql/mybatis-config.xml";
-		InputStream inputStream;
-		try {
-			inputStream = Resources.getResourceAsStream(resource);
-			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	//메소드는 myApplicationContext.xml에서 대체
 	
 	@Override
 	public List<Product> selectAll(int startRow, int endRow) throws FindException {

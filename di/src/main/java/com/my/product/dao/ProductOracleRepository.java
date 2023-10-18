@@ -7,11 +7,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import com.my.exception.FindException;
 import com.my.product.dto.Product;
 import com.my.sql.MyConnection;
 
 public class ProductOracleRepository implements ProductRepository {
+	private DataSource ds;
 
 	@Override
 	public List<Product> selectAll(int startRow, int endRow) throws FindException {
@@ -20,7 +23,8 @@ public class ProductOracleRepository implements ProductRepository {
 		ResultSet rs = null;
 		
 		try {
-			conn = MyConnection.getConnection();
+//			conn = MyConnection.getConnection();
+			conn = ds.getConnection();
 		} catch (Exception e) {
 //			e.printStackTrace();
 			throw new FindException(e.getMessage());
