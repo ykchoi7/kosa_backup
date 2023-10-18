@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.my.product.ProductMapper">
+
+  <!-- 전달될 파라미터가 하나일 때는 sql문에서만 설정해주면 된다 -->
+  <select id="selectByProdNo" resultType="Product">
+    SELECT * FROM product WHERE prod_no=#{aaa}
+  </select>
+  
+  <!-- 그러나 전달될 파라미터가 여러개일 때는 Map타입으로 전달해주어야 한다 -> parameterType Map으로 설정 -->
+  <select id="selectAll" resultType="Product" parameterType="java.util.HashMap">
+  	SELECT * 
+  	FROM ( SELECT rownum rn, a.*
+			FROM (SELECT *
+				  FROM product
+				  ORDER BY prod_no) a
+		  )
+	WHERE rn BETWEEN #{start} AND #{end}
+  </select>
+  
+  <!-- MyBatis의 기본으로 Wrapper자료형을 사용한다 -->
+  <select id="selectCount" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM product
+  </select>
+</mapper>
