@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+	">
+	
+	<!-- <context:annotation-config></context:annotation-config> -->
+	<context:component-scan base-package="com.my.di.dto"></context:component-scan>
+	
+	<!--
+	<bean id="a" class="com.my.di.dto.A">
+		<constructor-arg value="welcome"></constructor-arg>
+		<property name="msg" value="안녕하세요"></property>
+	</bean>
+	 -->
+	
+	<!-- 
+	B객체 생성 시, property 태그를 사용해서 no property가 999로 초기화
+	<bean id="b" class="com.my.di.dto.B">
+		<property name="no" value="999"></property>
+		
+		다른 bean태그의 id를 넣어서 객체 생성할 수도 있음!
+		<property name="a" ref="a"></property>
+	</bean>
+	 -->
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="oracle.jdbc.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="username" value="hr"></property>
+		<property name="password" value="hr"></property>
+	</bean>
+	
+	<!-- connection pool을 설정하는 방법 -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<!-- <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property> -->
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+ 		<!-- <property name="jdbcUrl"  value="jdbc:oracle:thin:@localhost:1521:xe"></property> -->
+		<property name="jdbcUrl"  value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="username" value="hr"/>
+		<property name="password" value="hr"/>
+		<property name="minimumIdle"  value="3" />
+	</bean>
+	
+	<bean id="dataSourceHikari" class="com.zaxxer.hikari.HikariDataSource">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+	</bean>
+	
+	<bean id="hikariConfig84" class="com.zaxxer.hikari.HikariConfig">
+		<!-- <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property> -->
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+ 		<!-- <property name="jdbcUrl"  value="jdbc:oracle:thin:@localhost:1521:xe"></property> -->
+		<property name="jdbcUrl"  value="jdbc:log4jdbc:oracle:thin:@192.168.1.84:1521:xe"></property>
+		<property name="username" value="hr"/>
+		<property name="password" value="hr"/>
+		<property name="minimumIdle"  value="3" />
+	</bean>
+	
+	<bean id="dataSourceHikari84" class="com.zaxxer.hikari.HikariDataSource">
+		<constructor-arg ref="hikariConfig84"></constructor-arg>
+	</bean>
+	
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceHikari"></property>
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+	</bean>
+	
+	<bean id="sqlSessionFactory84" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceHikari84"></property>
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+	</bean>
+	
+	
+	<!-- Product -->
+	<context:component-scan base-package="com.my.product.dao"></context:component-scan>
+	<!-- <bean id="productDAO" class="com.my.product.dao.ProductOracleMybatisRepository">
+		<property name="ds" ref="dataSource"/>
+		<property name="ds" ref="dataSourceHikari"></property>
+		<property name="SqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean> -->
+
+	<context:component-scan base-package="com.my.product.service"></context:component-scan>
+	<!-- <bean id="productService" class="com.my.product.service.ProductService">
+		<property name="repository" ref="productDAO"></property>
+	</bean> -->
+	
+	<!-- Customer -->
+	<context:component-scan base-package="com.my.customer.dao"></context:component-scan>
+	<context:component-scan base-package="com.my.customer.service"></context:component-scan>
+	
+	<!-- Order -->
+	<context:component-scan base-package="com.my.order.dao"></context:component-scan>
+	<context:component-scan base-package="com.my.order.service"></context:component-scan>
+
+</beans>
