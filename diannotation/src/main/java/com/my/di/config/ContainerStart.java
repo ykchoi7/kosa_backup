@@ -51,27 +51,27 @@ public class ContainerStart {
 			e.printStackTrace();
 		}
 		
-//		//Customer
-//		CustomerRepository c1 = ctx.getBean("customerDAO", com.my.customer.dao.CustomerRepository.class);
-//		System.out.println(c1);
-//		CustomerService cs1 = ctx.getBean("customerService", com.my.customer.service.CustomerService.class);
-////		System.out.println(cs1);
-//		try {
-//			cs1.login("B", "b");
-//		} catch (FindException e) {
-//			e.printStackTrace();
-//		}
-//
-//		//Order
-//		OrderRepository o1 = ctx.getBean("orderDAO", com.my.order.dao.OrderRepository.class);
-//		System.out.println(o1);
-//		OrderService os1 = ctx.getBean("orderService", com.my.order.service.OrderService.class);
-////		System.out.println(os1);
-//		try {
-//			System.out.println(os1.findById("B"));
-//		} catch (FindException e) {
-//			e.printStackTrace();
-//		}
+		//Customer
+		CustomerRepository c1 = ctx.getBean("customerDAO", com.my.customer.dao.CustomerRepository.class);
+		System.out.println(c1);
+		CustomerService cs1 = ctx.getBean("customerService", com.my.customer.service.CustomerService.class);
+//		System.out.println(cs1);
+		try {
+			cs1.login("B", "b");
+		} catch (FindException e) {
+			e.printStackTrace();
+		}
+
+		//Order
+		OrderRepository o1 = ctx.getBean("orderDAO", com.my.order.dao.OrderRepository.class);
+		System.out.println(o1);
+		OrderService os1 = ctx.getBean("orderService", com.my.order.service.OrderService.class);
+//		System.out.println(os1);
+		try {
+			System.out.println(os1.findById("B"));
+		} catch (FindException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
