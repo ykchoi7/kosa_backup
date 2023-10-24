@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	">
+	
+	<!-- connection pool을 설정하는 방법 -->	
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<!-- <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property> -->
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>  		
+		<!-- <property name="jdbcUrl"  value="jdbc:oracle:thin:@localhost:1521:xe"></property> -->
+		<property name="jdbcUrl"  value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="username" value="hr"/>
+		<property name="password" value="hr"/>
+		<property name="minimumIdle"  value="3" />
+	</bean>
+	
+	<bean id="dataSourceHikari" class="com.zaxxer.hikari.HikariDataSource">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+	</bean>
+    
+    <bean id="sqlSessionFactory" 
+          class="org.mybatis.spring.SqlSessionFactoryBean">
+          <property name="dataSource" ref="dataSourceHikari"></property>
+          <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+    </bean>
+    
+    <!-- Product -->
+	<context:component-scan base-package="com.my.product.dao"></context:component-scan>
+	<!-- <bean id="productDAO" class="com.my.product.dao.ProductOracleMybatisRepository">
+		<property name="ds" ref="dataSource"/>
+		<property name="ds" ref="dataSourceHikari"></property>
+		<property name="SqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean> -->
+
+	<context:component-scan base-package="com.my.product.service"></context:component-scan>
+	<!-- <bean id="productService" class="com.my.product.service.ProductService">
+		<property name="repository" ref="productDAO"></property>
+	</bean> -->
+	
+	<!-- Customer -->
+	<context:component-scan base-package="com.my.customer.dao"></context:component-scan>
+	<context:component-scan base-package="com.my.customer.service"></context:component-scan>
+	
+	<!-- Order -->
+	<context:component-scan base-package="com.my.order.dao"></context:component-scan>
+	<context:component-scan base-package="com.my.order.service"></context:component-scan>
+    
+    <!-- Transaction -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="dataSourceHikari"></property> <!-- 데이터소스 등록 -->
+    </bean>
+    
+    <!-- 생략한 내용 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    
+</beans>	

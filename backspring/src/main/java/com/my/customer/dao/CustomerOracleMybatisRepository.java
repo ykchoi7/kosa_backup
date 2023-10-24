@@ -24,7 +24,6 @@ public class CustomerOracleMybatisRepository implements CustomerRepository {
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 
-	
 	@Override
 	public Customer selectById(String id) throws FindException {
 		SqlSession session = null;

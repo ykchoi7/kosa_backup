@@ -12,6 +12,7 @@
 </context-param>
 <!-- back단을 먼저 만들고, 아래 Controller역할의 servlet 생성 -->
 
+<!-- Web Application Container 구동 -->
 <servlet>
 	<servlet-name>appServlet</servlet-name>
 	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">  
+<configuration>
+  <settings>
+    <setting name="mapUnderscoreToCamelCase" value="true"/>
+  </settings>
+  <typeAliases>
+  	<typeAlias type="com.my.customer.dto.Customer" alias="Customer"/>
+  	<typeAlias type="com.my.product.dto.Product" alias="Product"/>
+  	<typeAlias type="com.my.order.dto.OrderInfo" alias="OrderInfo"/>
+  	<typeAlias type="com.my.order.dto.OrderLine" alias="OrderLine"/>
+  </typeAliases>
+  <!-- <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="oracle.jdbc.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+        <property name="username" value="hr"/>
+        <property name="password" value="hr"/>
+      </dataSource>
+    </environment>
+  </environments> -->
+  
+  <mappers>
+    <mapper resource="Customer.xml"/>
+    <mapper resource="Product.xml"/>
+    <mapper resource="Order.xml"/>
+  </mappers> 
+
+</configuration>
