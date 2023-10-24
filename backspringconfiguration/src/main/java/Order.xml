@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.my.order.OrderMapper">
+<!-- OrderInfo를 대신할 Map -->
+<resultMap type="OrderInfo" id="OrderInfoMap" autoMapping="true"> <!-- 자동매핑 필요 -->
+	
+	<!-- OrderInfo가 생성될 기준 생성 -> orderNo를 기준으로 생성하고 싶다 -->
+	<id property="orderNo" column = "order_no"></id>
+	
+	<collection property="lines" ofType="OrderLine" autoMapping="true">
+	<!-- 리스트 타입으로 반환해야하기 때문에 콜렉션을 만들고 lines와 매핑 -->
+		<association property="orderLineNo" column="order_no"/>
+
+		<!-- 객체의 속성 orderP 와 연관짓기 -->
+		<association property="orderP" javaType="Product" autoMapping="true"></association> <!-- Product 클래스와 자동 연결 -> orderP에 넣어주기 -->
+	</collection>
+</resultMap>
+
+<insert id="insertInfo" parameterType="string" > <!-- resultType은 select태그에만 적을 수 있다 -->
+  INSERT INTO order_info(order_no, order_id, order_dt)
+  VALUES (order_seq.NEXTVAL, #{id}, SYSDATE)
+</insert>
+
+<insert id="insertLine" parameterType="OrderLine">
+  INSERT INTO order_line(order_line_no, order_prod_no, order_quantity)
+  VALUES (order_seq.CURRVAL, #{orderP.prodNo}, #{orderQuantity})
+</insert>
+
+<!-- 
+OrderInfo를 그대로 추출하면 하나씩 추출됨 (OrderP나 OrderLine에 들어가지 못하고)
+select문과 추출하고자 하는 OrderLine은 계속 비어있는 상태로 출력되기 때문에 일반적인 이 형식을 사용하는 것이 아니다 -> resultMap 사용
+<select id="selectById" resultType="OrderInfo"> 
+-->
+<select id="selectById" resultMap="OrderInfoMap">
+  SELECT order_no, order_id, order_dt, order_quantity, 
+  p.prod_no, prod_name,prod_price <!-- OrderP, OrderLine에 제대로 안 담김다 -->
+  FROM order_info info JOIN order_line line ON ( info.order_no = line.order_line_no)
+					   JOIN product p ON (line.order_prod_no = p.prod_no)
+  WHERE order_id = #{id}
+  ORDER BY order_dt DESC
+</select>
+</mapper>
