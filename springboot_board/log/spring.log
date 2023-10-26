@@ -1,0 +1,8 @@
+2023-10-26 16:54:03.516  INFO 6868 --- [RMI TCP Connection(206)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown initiated...
+2023-10-26 16:54:03.518  INFO 6868 --- [HikariPool-7 connection closer] jdbc.connection                          : 28. Connection closed
+2023-10-26 16:54:03.518  INFO 6868 --- [HikariPool-7 connection closer] jdbc.audit                               : 28. Connection.close() returned 
+2023-10-26 16:54:03.519  INFO 6868 --- [HikariPool-7 connection closer] jdbc.connection                          : 29. Connection closed
+2023-10-26 16:54:03.519  INFO 6868 --- [HikariPool-7 connection closer] jdbc.audit                               : 29. Connection.close() returned 
+2023-10-26 16:54:03.520  INFO 6868 --- [HikariPool-7 connection closer] jdbc.connection                          : 30. Connection closed
+2023-10-26 16:54:03.520  INFO 6868 --- [HikariPool-7 connection closer] jdbc.audit                               : 30. Connection.close() returned 
+2023-10-26 16:54:03.520  INFO 6868 --- [RMI TCP Connection(206)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown completed.
