@@ -22,7 +22,6 @@ import com.zaxxer.hikari.HikariDataSource;
 								"com.my.customer.service", 
 								"com.my.order.dao", 
 								"com.my.order.service"}) //component-scan 태그를 대신
-
 @EnableTransactionManagement
 public class MyApplicationContext {
 	
