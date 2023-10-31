@@ -11,8 +11,8 @@ import org.springframework.data.repository.CrudRepository;
 import com.my.jpa.entity.A;
 
 //public interface ARepository extends CrudRepository<A, String> {
-	public interface ARepository extends JpaRepository<A, String> {
-													     //키 타입
+	public interface ARepository extends JpaRepository<A, String>, ASearch {  //crud 기능 제공됨
+													// id, 키 타입
 	//쿼리메서드작성 가능 : findBy멤버변수명, 반환형은 List자료형
 	List<A> findByA4(String a4);
 	
@@ -54,4 +54,8 @@ import com.my.jpa.entity.A;
 	@Modifying
 	@Query(value="UPDATE a_tbl SET a_2=:a_2 WHERE a_1=:a_1", nativeQuery = true)
 	public int modify(String a_1, BigDecimal a_2);
+	
+	//@Query - 정적 쿼리만 생성 가능
+	//@Query DSL - 동적 쿼리 생성 가능, 사용하지 위해서는 queue domain, interface, 구현체 먼저 필요!!
+
 }

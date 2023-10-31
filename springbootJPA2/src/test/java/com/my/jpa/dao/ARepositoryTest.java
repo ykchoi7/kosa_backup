@@ -9,9 +9,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.my.jpa.dto.ADTO;
 import com.my.jpa.entity.A;
 
 import lombok.extern.slf4j.Slf4j;
@@ -136,6 +141,72 @@ class ARepositoryTest {
 		BigDecimal a_2 = new BigDecimal(888.0);
 		int rowcnt = r.modify(a_1, a_2);
 		log.error("수정된 행 수 : {}", rowcnt);
+	}
+	
+	@Test
+	@Transactional
+	@Commit
+	void test11QdslSearch() {
+		List<A> list = r.search1();
+		log.error("search1()={}", list);
+	}
+	
+	@Test
+	@Transactional
+	@Commit
+	void test12QdslSearch2() {
+		List<A> list = r.search2(3);
+		log.error("search2()={}", list);
+	}
+	
+	@Test
+	@Transactional
+	@Commit
+	void test13QdslSearch3() {
+		List<A> list = r.search3("4f");
+		log.error("search3()={}", list);
+	}
+	
+	@Test
+	@Transactional
+	@Commit
+	void test14QdslSearch4() {
+		List<A> list = r.search4(new String[] {"a4"}, "t");
+		log.error("search4()={}", list);
+	}
+	
+	@Test
+	@Transactional
+	@Commit
+	void test15QdslSearch5() {
+		List<A> list = r.search5(5, "4f");
+		log.error("search5()={}", list);
+	}
+	
+	@Test
+	@Transactional
+	@Commit
+	void test16Add() {
+		ADTO dto = new ADTO();
+		dto.setA1("six");
+		dto.setA2(6);
+		dto.setA4("a4six");
+		r.add(dto);
+	}
+	
+	@DisplayName("Page처리용 findAll메서드")
+	@Test
+	void testPageable() {
+		int currentPage = 2;
+		int pageIndex = currentPage-1; //zero-based page index.
+		int size = 4; //the size of the page to be returned.
+		Sort sort = Sort.by("a4").ascending(); //must not be null, use Sort.unsorted() instead. 
+		Pageable pageable = PageRequest.of(pageIndex, size, sort); //페이지인덱스번호, 몇개씩 볼지, 정렬순서
+		Page<A> page = r.findAll(pageable);
+		log.error("페이지별 보여줄 목록 수: page.getSize()={}",page.getSize());
+		log.error("총 페이지 수: page.getTotalPages()={}",page.getTotalPages());
+		log.error("목록 수: page.getContent().size()={}", page.getContent().size());
+		log.error("목록: page.getContent()={}", page.getContent());
 	}
 	
 }
