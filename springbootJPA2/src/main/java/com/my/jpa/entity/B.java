@@ -54,7 +54,7 @@ public class B {
 	private C bC; //게시글을 쓴 작성자 정보
 
 	@OneToMany(
-			fetch = FetchType.EAGER //fetch란? SQL저장소에서 SELECT를 한 후 스냅샷에 객체 생성
+			fetch = FetchType.EAGER //fetch란? SQL저장소에서 SELECT를 한 후 스냅샷에 객체 생성 (영속성 유지)
 			,
 			cascade = CascadeType.REMOVE //B entity가 removed 상태가 될 때 cascade를 진행한다 라는 것을 의미
 //			cascade = CascadeType.ALL   //모든 상태전이를 같이 하고 싶을 때(B entity가 persist상태가 되면 r entity도 모두 persist 상태가 되도록) .ALL
@@ -62,7 +62,5 @@ public class B {
 			)
 	@JoinColumn(name="rb_no")
 	private List<R> rs;
-	
-	
-	
+
 }

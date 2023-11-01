@@ -32,7 +32,11 @@ public class B_C_RRepositoryTest {
 	@Commit
 	void test1C_Save() {
 		for (int i = 1; i < 5; i++) {
-			C c = new C("id"+i, "n"+i);
+//			C c = new C("id"+i, "n"+i);
+			C c = C.builder()	//dto에서 @Builder를 추가함으로써 사용가능
+					.cId("id"+i)
+					.cName("n"+i)
+					.build();
 			cr.save(c);
 		}
 	}
@@ -80,6 +84,16 @@ public class B_C_RRepositoryTest {
 	@Commit
 	void test5B_DeleteById() {
 		br.deleteById(1L);
+	}
+	
+	@Test
+	@Transactional
+	@Commit
+	void test6C_findById() {
+		Optional<C> optC = cr.findById("id1");
+		Assertions.assertTrue(optC.isPresent());
+		C c = optC.get();
+		log.error("회원정보 {}, 게시글들 {}", c.getCName(), c.getBs());
 	}
 	
 }
