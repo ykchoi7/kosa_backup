@@ -21,7 +21,7 @@
   <select id="selectByBoardNo" parameterType="int" resultMap="BoardMap"> <!-- map으로 boardno당 답글들이 다 나오게 하기 위해 -->
   	SELECT *
 	FROM board b LEFT JOIN 
-	(SELECT level,r1.* FROM board_reply r1 START WITH reply_parent_no IS NULL CONNECT BY PRIOR reply_no =  reply_parent_no 
+	(SELECT level,r1.* FROM board_reply r1 START WITH reply_parent_no IS NULL CONNECT BY PRIOR reply_no = reply_parent_no 
 	 ORDER SIBLINGS BY reply_no DESC) r
 	ON b.board_no = r.reply_board_no
 	WHERE board_no = #{boardNo}

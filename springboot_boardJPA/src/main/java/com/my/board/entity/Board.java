@@ -64,6 +64,14 @@ public class Board {
 	@JoinColumn(name="reply_board_no")
 	private List<Reply> replies; //답글 목록
 	
+	/**
+	 * 게시글 내용을 변경한다
+	 * @param name
+	 */
+	public void modifyContent(String boardContent) {
+		this.boardContent = boardContent;
+	}	
+	
 //	private Integer replycnt; //답글 개수
 	
 }

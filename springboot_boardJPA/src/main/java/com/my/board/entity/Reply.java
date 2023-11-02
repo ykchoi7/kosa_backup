@@ -54,6 +54,14 @@ public class Reply {
 	@Column(name="reply_dt")
 	private Date replyDt;
 	
+	/**
+	 * 답글 내용을 변경한다
+	 * @param name
+	 */
+	public void modifyContent(String replyContent) {
+		this.replyContent = replyContent;
+	}
+	
 //	private Integer level;
 	
 }
