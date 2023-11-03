@@ -1,5 +1,6 @@
 package com.my.board.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.my.board.dto.BoardDTO;
 import com.my.board.entity.Board;
+import com.my.board.entity.Customer;
 import com.my.board.entity.Reply;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,16 +28,18 @@ class BoardRepositoryTest {
 	@Autowired
 	ReplyRepository rrepository;
 	
+	@Autowired
+	CustomerRepository crepository;
+	
 	@Test
 	@DisplayName("게시글 저장 테스트")
 	void test1B_Insert() {
 		Board b = 
 				Board
 				.builder()
-				.boardTitle("제목2")
-				.boardContent("내용2")
-				.boardId("작성자1")
-				.boardDt(new java.util.Date())
+				.boardTitle("제목1")
+				.boardContent("내용1")
+				.boardId("아이디1")
 				.build();
 		log.error("INSERT용 Board 객체 entity boardTitle:{}, boardContent:{}, boardId:{}, boardDt:{}",
 				b.getBoardTitle(),
@@ -47,28 +51,30 @@ class BoardRepositoryTest {
 	}
 	
 	@Test
+	@DisplayName("고객 저장 테스트")
+	void test11C_Insert() {
+		Customer c = 
+				Customer
+				.builder()
+				.id("아이디1")
+				.pwd("1111")
+				.name("이름1")
+				.build();
+		crepository.save(c);
+	}
+	
+	@Test
 	@DisplayName("답글 저장 테스트")
 	void test2R_Insert() {
-		Integer boardNo = 1;
-		Integer parentNo = 1;
+		Integer boardNo = 2;
 		Reply r = 
 				Reply
 				.builder()
 				.replyBoardNo(boardNo)
-				.replyParentNo(parentNo)
+				.replyParentNo(null)
 				.replyContent("답글1")
-				.replyId("작성자3")
-				.replyDt(new java.util.Date())
+				.replyId("아이디1")
 				.build();
-		log.error("INSERT용 Reply 객체 entity replyNo:{}, replyBoardNo:{}, replyParentNo:{}, "
-				+ "replyContent:{}, replyId:{}, replyDt: {}",
-				r.getReplyNo(),
-				r.getReplyBoardNo(),
-				r.getReplyParentNo(),
-				r.getReplyContent(),
-				r.getReplyId(),
-				r.getReplyDt()
-				);
 		rrepository.save(r);
 	}
 	
@@ -129,6 +135,20 @@ class BoardRepositoryTest {
 	void test5B_Delete() {
 		int boardNo = 1;
 		brepository.deleteById(boardNo);
+	}
+	
+	@Test
+	void test6B_Select() {
+		brepository.findAll();
+		Iterable<Board> it = brepository.findAll();
+		log.error("br.findAll() : {}" + it);
+	}
+	
+	@Test
+	void test7B_SelectById() {
+		int boardNo = 1;
+//		List<Board> listb = brepository.findByBoardNo(boardNo);
+//		log.error("listb.findbyboardno() : {} " + listb);
 	}
 	
 }

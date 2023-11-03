@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 //@Setter
 @Getter 
 @Builder  //constructor어노테이션 있어야 builder 사용가능
-@DynamicInsert //INSERT될 때 null이 아닌 컬럼들만 사용한다
+@DynamicInsert //INSERT될 때 null이 아닌 컬럼들만 사용한다 (default사용)
 @Entity
 @Table(name="store_tbl")
 public class StoreEntity {

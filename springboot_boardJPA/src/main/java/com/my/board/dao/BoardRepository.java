@@ -17,13 +17,12 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
 			nativeQuery = true)
 	public List<Board> findAll();
 	
-	@Query(value="SELECT *\r\n"
-			+ "	FROM board b LEFT JOIN \r\n"
-			+ "	(SELECT level,r1.* FROM board_reply r1 START WITH reply_parent_no IS NULL CONNECT BY PRIOR reply_no = reply_parent_no \r\n"
-			+ "	 ORDER SIBLINGS BY reply_no DESC) r\r\n"
-			+ "	ON b.board_no = r.reply_board_no\r\n"
-			+ "	WHERE board_no = :boardNo",
+	@Query(value="SELECT * FROM board_tbl b LEFT JOIN\r\n"
+			+ "    (SELECT level,r.* FROM reply_tbl r START WITH reply_parent_no IS NULL CONNECT BY PRIOR reply_no = reply_parent_no\r\n"
+			+ "    ORDER SIBLINGS BY reply_no DESC)\r\n"
+			+ "ON b.board_no = reply_board_no\r\n"
+			+ "WHERE b.board_no = :boardNo",
 			nativeQuery = true)
-	public List<Board> findByBoardNo(int boardNo);
+	public List<Object[]> findByBoardNo(int boardNo);
 	
 }

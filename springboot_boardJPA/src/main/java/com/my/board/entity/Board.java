@@ -1,6 +1,6 @@
 package com.my.board.entity;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,9 +11,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import com.my.board.dto.ReplyDTO;
 
@@ -22,12 +26,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Builder
+@ToString
 
 @Entity
 @Table(name="board_tbl")
+@DynamicInsert
 @SequenceGenerator(
 			name = "BOARDJPA_SEQ_GENERATOR",
 			sequenceName = "boardjpa_seq",
@@ -54,6 +61,7 @@ public class Board {
 	private String boardId; //게시글 작성자
 	
 	@Column(name="board_dt")
+	@ColumnDefault(value="SYSDATE")
 	private Date boardDt; //게시글 작성일자
 	
 	@OneToMany(
@@ -72,6 +80,9 @@ public class Board {
 		this.boardContent = boardContent;
 	}	
 	
+	public void countReply(Integer boardNo) {
+		this.boardNo = boardNo;
+	}
 //	private Integer replycnt; //답글 개수
 	
 }

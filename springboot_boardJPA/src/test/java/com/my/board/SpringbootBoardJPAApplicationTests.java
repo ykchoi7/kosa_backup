@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
 @Slf4j
-class SpringbootBoardApplicationTests {
+class SpringbootBoardJPAApplicationTests {
 //	Logger log = LoggerFactory.getLogger(getClass()); -> 이걸 대신할 수 있는 어노테이션이 @Slf4j
 	@Autowired
 	Environment env;

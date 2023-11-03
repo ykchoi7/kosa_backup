@@ -1,15 +1,21 @@
 package com.my.board.entity;
 
-import java.util.Date;
+import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +29,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name="reply_tbl")
+@DynamicInsert
 @SequenceGenerator(
 		name = "REPLYJPA_SEQ_GENERATOR",
 		sequenceName = "replyjpa_seq",
@@ -52,7 +59,12 @@ public class Reply {
 	private String replyId;
 	
 	@Column(name="reply_dt")
+	@ColumnDefault(value="SYSDATE")
 	private Date replyDt;
+	
+	@OneToMany
+	@JoinColumn(name="reply_parent_no")
+	private List<Reply> r;
 	
 	/**
 	 * 답글 내용을 변경한다

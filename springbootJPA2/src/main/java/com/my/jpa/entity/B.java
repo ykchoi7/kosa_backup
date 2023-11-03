@@ -35,7 +35,6 @@ import lombok.ToString;
 		   initialValue = 1, allocationSize = 1
 		)
 
-
 public class B {
 
 	@Id

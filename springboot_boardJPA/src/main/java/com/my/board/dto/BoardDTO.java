@@ -6,6 +6,8 @@ import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,6 +26,7 @@ public class BoardDTO {
 	private String boardContent;
 	@NotEmpty(message="글작성자아이디는 반드시 입력하세요")
 	private String boardId;
+	@JsonFormat(pattern="yy/MM/dd", timezone="Asia/Seoul")
 	private Date boardDt;
 	private List<ReplyDTO> replies; //답글 목록
 	private Integer replycnt; //답글 개수
