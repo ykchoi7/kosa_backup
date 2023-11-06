@@ -161,41 +161,54 @@ public class BoardService {
 	public void write(BoardDTO bdto) throws AddException {
 		Board board = DtoToVo_ModelMapper(bdto);
 		br.save(board);
+		
+		//util패키지를 따로 만들어서 mapper를 생성한 경우 -> INSTANCE로 가져오기
+//		ModelMapper mapper = MapperUtil.INSTANCE.get();
+//		Board board = mapper.map(bdto, Board.class);
+//		br.save(board);
 	}
 	
 	public void modify(BoardDTO bdto) throws ModifyException {
 		Integer boardNo = bdto.getBoardNo();
 		Optional<Board> optB = br.findById(boardNo);
+		//예외처리 중간에 한번 해주기 (게시글번호에 해당하는 게시글이 없는 경우)
+		optB.orElseThrow(() -> 
+			new ModifyException("게시글이 없어서 수정 실패")
+		);
 		Board b = optB.get();
-		b.modifyContent(bdto.getBoardContent());
+		b.modifyContent(bdto.getBoardContent()); //내용 수정
 		br.save(b);
 	}
 	
 	public void remove(int boardNo) throws RemoveException {
-		br.deleteById(boardNo);
+		try {
+			br.deleteById(boardNo);
+		} catch (Exception e) {
+			throw new RemoveException(e.getMessage());
+		}
 	}
 	
 	public void writeReply(ReplyDTO rdto) throws AddException {
-		rdto = 
-				ReplyDTO
-				.builder()
-				.replyBoardNo(rdto.getReplyBoardNo())
-				.replyParentNo(rdto.getReplyParentNo())
-				.replyContent(rdto.getReplyContent())
-				.replyId(rdto.getReplyId())
-				.replyDt(new java.util.Date())
-				.build();
 		Reply rentity = RDtoToVo_ModelMapper(rdto);
-		log.error("INSERT용 Reply 객체 entity replyNo:{}, replyBoardNo:{}, replyParentNo:{}, "
-				+ "replyContent:{}, replyId:{}, replyDt: {}",
-				rdto.getReplyNo(),
-				rdto.getReplyBoardNo(),
-				rdto.getReplyParentNo(),
-				rdto.getReplyContent(),
-				rdto.getReplyId(),
-				rdto.getReplyDt()
-				);
 		rr.save(rentity);
+//		rdto = 
+//				ReplyDTO
+//				.builder()
+//				.replyBoardNo(rdto.getReplyBoardNo())
+//				.replyParentNo(rdto.getReplyParentNo())
+//				.replyContent(rdto.getReplyContent())
+//				.replyId(rdto.getReplyId())
+//				.replyDt(new java.util.Date())
+//				.build();
+//		log.error("INSERT용 Reply 객체 entity replyNo:{}, replyBoardNo:{}, replyParentNo:{}, "
+//				+ "replyContent:{}, replyId:{}, replyDt: {}",
+//				rdto.getReplyNo(),
+//				rdto.getReplyBoardNo(),
+//				rdto.getReplyParentNo(),
+//				rdto.getReplyContent(),
+//				rdto.getReplyId(),
+//				rdto.getReplyDt()
+//				);
 	}
 	
 	public void modifyReply(ReplyDTO rdto) throws ModifyException {
