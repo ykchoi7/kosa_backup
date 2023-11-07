@@ -1,0 +1,19 @@
+logging:
+  level:
+    jdbc:
+      resultsettable: info
+    org:
+      hibernate: info
+    root: info
+server:
+  port: 9994
+spring:
+  jpa:
+    database: oracle
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
