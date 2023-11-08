@@ -1,0 +1,16 @@
+server:
+  port: 8880
+
+spring:
+  application:
+    name:
+      -catalog
+      -customer
+  profiles:
+    active: native
+
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:configuration-repository/  #검색할 설정파일 경로

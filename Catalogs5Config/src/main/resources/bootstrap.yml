@@ -1,0 +1,6 @@
+#server:
+#  port: 9265  #서버포트
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8880    #Config서버 URL

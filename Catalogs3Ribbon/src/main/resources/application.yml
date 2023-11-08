@@ -1,0 +1,14 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: catalog
+    
+customer:
+  ribbon: #로드밸런싱을 진행할 다른 서버들
+    listOfServers: localhost:8082, localhost:8083 
+    #docker container에서 쓰일 ip또는 같은네트워크그룹의 컨테이너이름
+    # listOfServers: customerconribbon1:8082, customerconribbon2:8082 -> localhost대신 contatiner name을 입력한 경우
+    
+         

@@ -1,0 +1,17 @@
+hystrix:
+  command:
+    default:    # command Key. use 'default' for global setting.
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 500 #7000으로 변경하고, post방식으로 http://localhost:8081/actuator/refresh호출  
+      metrics: #1분(60000)동안 최소 1회 호출 이상, 50% 이상 실패면 circuit open
+        rollingStats: 
+          timeInMilliseconds: 60000     
+      circuitBreaker:
+        requestVolumeThreshold: 1 
+        errorThresholdPercentage: 50
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

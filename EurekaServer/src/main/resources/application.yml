@@ -1,0 +1,29 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: EurekaServer
+
+# 일시적인 네트워크 장애로 인한 서비스 해제 막기 위한 자기 보호 모드 (디폴트 true, 운영에선 반드시 true 로 설정 필요)
+# 원래는 해당 시간안에 하트비트가 일정 횟수 이상 들어오지 않아야 서비스 해제하는데 false 설정 시 하트비트가 들어오지 않으면 바로 서비스 제거
+# eureka:
+#   server:
+#     enable-self-preservation: true
+
+#유레카 서버클라이언트 양쪽 설정
+#eureka:
+#  client:
+#    레지스트리에 자신을 등록할지에 대한 여부 (디폴트 true)
+#    register-with-eureka: false
+
+#    레지스트리에 있는 정보를 가져올지에 대한 여부 (디폴트 true)
+#    true 로 설정 시 검색할 때마다 Eureka Server 를 호출하는 대신 레지스트리가 로컬로 캐싱됨
+#    30초마다 Eureka Client 가 유레카 레지스트리 변경 사항 여부 재확인함
+#    fetch-registry: false
+
+#   서비스의 호스트 이름이 아닌 IP 주소를 Eureka Server 에 등록하도록 지정 (디폴트 false)
+#   기본적으로 유레카는 호스트 이름으로 접속하는 서비스를 등록하는데 DNS 가 지원된 호스트 이름을 할당하는 서버 기반 환경에서는 잘 동작하지만, 컨테이너 기반의 배포에서 컨테이너는 DNS 엔트리가 없는 임의의 생성된 호스트 이름을 부여받아 시작하므로 컨테이너 기반 배포에서는 해당 설정값을 false 로 하는 경우 호스트 이름 위치를 정상적으로 얻지 못함
+# eureka:
+#   instance:
+#     prefer-ip-address: true  

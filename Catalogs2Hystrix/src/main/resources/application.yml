@@ -1,0 +1,26 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: catalog
+    
+hystrix:
+  command:
+    default:    # command Key. use 'default' for global setting.
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 500  
+
+# metrics.rollingStats.timeInMilliseconds : 오류 감시 시간, 기본값 10초
+# circuitBreaker.requestVolumeThreshold : 감시 시간 내 요청 수, 기본값 20
+# circuitBreaker.errorThresholdPercentage : 요청 대비 오류율, 기본값 50  
+      
+      metrics: #1분(60000)동안 최소 2회 호출 이상, 50% 이상 실패면 circuit open (서킷 차단 시작)
+        rollingStats: 
+          timeInMilliseconds: 60000     
+      circuitBreaker:
+        requestVolumeThreshold: 2
+        errorThresholdPercentage: 50
+       
